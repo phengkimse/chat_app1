@@ -200,25 +200,24 @@ class _RegisterPageState extends State<RegisterPage> {
                               bool result =
                                   await _authService.signup(email!, password!);
                               if (result) {
-                                String? pfpURl =
-                                    await _storageService.uploadUserPfp(
-                                        file: selectedImage!,
-                                        uid: _authService.user!.uid);
-                                if (pfpURl != null) {
-                                  await _databaseService.createUserProfile(
-                                      userProfile: UserProfile(
-                                          uid: _authService.user!.uid,
-                                          name: name,
-                                          pfpURL: pfpURl));
-                                }
+                                // String? pfpURl =
+                                //     await _storageService.uploadUserPfp(
+                                //         file: selectedImage!,
+                                //         uid: _authService.user!.uid);
+                                // if (pfpURl != null) {
+                                await _databaseService.createUserProfile(
+                                    userProfile: UserProfile(
+                                  uid: _authService.user!.uid,
+                                  name: name,
+                                  // pfpURL: pfpURl
+                                ));
+                                // }
                                 _alertService.showToast(
                                     text: "register successfully!",
                                     icon: Icons.check,
                                     color: Colors.green);
                                 _navigationService
                                     .pushReplacementNamed("/home");
-                              } else {
-                                throw Exception("Unable to register user");
                               }
                             }
                           } catch (e) {
@@ -246,7 +245,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _navigationService.goBack();
+                      _navigationService.pushReplacementNamed("/login");
                     },
                     child: Text(
                       "login here",
