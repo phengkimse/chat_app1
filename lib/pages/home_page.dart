@@ -1,4 +1,5 @@
 import 'package:chat_app1/models/user_profile.dart';
+import 'package:chat_app1/pages/chat_page.dart';
 import 'package:chat_app1/service/alert_service.dart';
 import 'package:chat_app1/service/auth_service.dart';
 import 'package:chat_app1/service/database_service.dart';
@@ -8,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({
+    super.key,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -38,13 +41,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.menu,
-            color: Colors.blue,
-          ),
-        ),
         title: Text(
           "Messages",
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -83,7 +79,29 @@ class _HomePageState extends State<HomePage> {
               itemCount: users.length,
               itemBuilder: (context, index) {
                 UserProfile user = users[index].data();
-                return ChatTile(userProfile: user, onTap: () {});
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: ChatTile(
+                    userProfile: user,
+                    onTap: () async {
+                      final chatExists = await _databaseService.checkChatExists(
+                          _authService.user!.uid, user.uid!);
+                      if (!chatExists) {
+                        await _databaseService.createNewChat(
+                            _authService.user!.uid, user.uid!);
+                      }
+                      _navigationService.push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ChatPage(
+                              chatUser: user,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                );
               },
             );
           }

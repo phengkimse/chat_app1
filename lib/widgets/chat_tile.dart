@@ -17,8 +17,8 @@ class ChatTile extends StatelessWidget {
       },
       dense: false,
       leading: CircleAvatar(
-        // backgroundImage: NetworkImage(userProfile.pfpURL!),
-        backgroundImage: NetworkImage(PLACEHOLDER_PFP),
+        backgroundImage: NetworkImage(userProfile.pfpURL!),
+        // backgroundImage: NetworkImage(PLACEHOLDER_PFP),
       ),
       title: Text(userProfile.name!),
     );

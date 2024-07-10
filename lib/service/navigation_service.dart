@@ -7,8 +7,8 @@ class NavigationService {
   late GlobalKey<NavigatorState> _navigatorKey;
   final Map<String, Widget Function(BuildContext)> _routes = {
     "/login": (context) => LoginPage(),
-    "/home": (context) => HomePage(), 
-    "/register": (context) => RegisterPage(), 
+    "/home": (context) => HomePage(),
+    "/register": (context) => RegisterPage(),
   };
   Map<String, Widget Function(BuildContext)> get routes {
     return _routes;
@@ -23,6 +23,10 @@ class NavigationService {
   }
   void pushNamed(String routeName) {
     _navigatorKey.currentState?.pushNamed(routeName);
+  }
+
+  void push(MaterialPageRoute route) {
+    _navigatorKey.currentState?.push(route);
   }
 
   void pushReplacementNamed(String routeName) {
