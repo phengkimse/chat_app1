@@ -24,7 +24,6 @@ class AlertService {
         position: DelightSnackbarPosition.top,
         builder: (context) {
           return Container(
-            // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
             child: ToastCard(
               shadowColor: Colors.blue,
               title: Text(
